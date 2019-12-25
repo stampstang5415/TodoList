@@ -1,0 +1,34 @@
+{
+  "Todo": [
+    {
+      "id": "57b6e152-f7e8-4ff7-a872-7ac734d81940",
+      "title": "Download SQL Server",
+      "completed": true
+    },
+    {
+      "id": "b72f1d06-2f4d-40ad-bfcb-7780b178be44",
+      "title": "Launch the SQL Server Installation Center",
+      "completed": false
+    },
+    {
+      "id": "eee5a72e-0627-4340-80f0-f68b652fe1d4",
+      "title": "Start the Installation Wizard",
+      "completed": false
+    },
+    {
+      "id": "808aa9b0-f00c-4130-8c39-3093d38192d0",
+      "title": "Product Key",
+      "completed": false
+    },
+    {
+      "id": "e3bca651-9593-4815-875b-503395f27f42",
+      "title": "License Terms",
+      "completed": false
+    },
+    {
+      "id": "726088ec-98ff-4f01-8569-8979504a9c3d",
+      "title": "Microsoft Update",
+      "completed": false
+    }
+  ]
+}

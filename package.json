@@ -4,7 +4,9 @@
   "description": "todolist",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "json": "json-server --watch src/data.json"
   },
   "repository": {
     "type": "git",
@@ -19,9 +21,14 @@
   "dependencies": {
     "apollo-server": "^2.9.14",
     "apollo-server-express": "^2.9.14",
+    "axios": "^0.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "graphql": "^14.5.8",
+    "json-server": "^0.15.1",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.2"
   }
 }
