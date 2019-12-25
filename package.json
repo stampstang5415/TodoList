@@ -1,0 +1,27 @@
+{
+  "name": "dotolist",
+  "version": "1.0.0",
+  "description": "todolist",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stampstang5415/TodoList.git"
+  },
+  "author": "Patcharapon Mondee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stampstang5415/TodoList/issues"
+  },
+  "homepage": "https://github.com/stampstang5415/TodoList#readme",
+  "dependencies": {
+    "apollo-server": "^2.9.14",
+    "apollo-server-express": "^2.9.14",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "graphql": "^14.5.8",
+    "nodemon": "^2.0.2"
+  }
+}
