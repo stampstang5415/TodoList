@@ -1,7 +1,6 @@
 const cors = require("cors");
 const uuidv4 = require("uuid/v4");
 const express = require("express");
-const graphql = require("graphql");
 const schema = require("./schema.js");
 const { ApolloServer, gql } = require("apollo-server-express");
 const fs = require("fs");
@@ -37,42 +36,42 @@ const resolvers = {
     },
     editTitle: (_, { id, title }) => {
       const file = fs.readFileSync("src/testdata.json", "utf8");
-      // const editTodoTitle = {
-      //   id,
-      //   title
-      // };
-      // Object.values(Todo).filter(Todo => Todo.id);
-      // console.log(Todo);
-      // Todo[title.data] = Todo[id] == editTodoTitle.id;
-      // Todo[id] = editTodoTitle;
-      objIndex = myArray.findIndex(obj => obj.id == 1);
       let jsonObj = JSON.parse(file);
       console.log(jsonObj);
-      jsonObj.Todo.push(newTodo);
+      objIndex = jsonObj.Todo.findIndex(obj => obj.id == id);
+      jsonObj.Todo[objIndex].title = title;
       let jsonContent = JSON.stringify(jsonObj);
       console.log(jsonContent);
       fs.writeFileSync("src/testdata.json", jsonContent);
       console.log("JSON file has been saved.");
+      return jsonObj.Todo[objIndex];
+    },
+    editStatus: (_, { id, completed }) => {
+      const file = fs.readFileSync("src/testdata.json", "utf8");
+      let jsonObj = JSON.parse(file);
+      console.log(jsonObj);
+      objIndex = jsonObj.Todo.findIndex(obj => obj.id == id);
+      jsonObj.Todo[objIndex].completed = completed;
+      let jsonContent = JSON.stringify(jsonObj);
+      console.log(jsonContent);
+      fs.writeFileSync("src/testdata.json", jsonContent);
+      console.log("JSON file has been saved.");
+      return jsonObj.Todo[objIndex];
+    },
+    removeTodo: (_, { id }) => {
+      const file = fs.readFileSync("src/testdata.json", "utf8");
+      let jsonObj = JSON.parse(file);
+      console.log(jsonObj);
+      objIndex = jsonObj.Todo.findIndex(obj => obj.id == id);
+      // jsonObj.Todo[objIndex].completed = completed;
+      delete jsonObj.Todo[objIndex];
+      let jsonContent = JSON.stringify(jsonObj);
+      console.log(jsonContent);
+      fs.writeFileSync("src/testdata.json", jsonContent);
+      console.log("JSON file has been saved.");
+
       return jsonObj.Todo;
     }
-    //   removeTodo: (_, { id }) => {
-    //     const { [id]: Todo, ...otherTodo } = Todo;
-
-    //     if (!Todo) {
-    //       return false;
-    //     }
-
-    //     Todo = otherTodo;
-
-    //     return true;
-    //     //   Object.values(Todo).filter(Todo => Todo.id);
-    //     //   // console.log(Todo);
-    //     //   // Todo[title.data] = Todo[id] == editTodoTitle.id;
-    //     //   Todo[id] = editTodoTitle;
-    //     //   console.log(Todo);
-    //     // return [Todo];
-    //     // }
-    //   }
   }
 };
 const server = new ApolloServer({

@@ -14,4 +14,4 @@ console.log("Before update: ", myArray[objIndex]);
 myArray[objIndex].name = "Laila";
 
 //Log object to console again.
-console.log("After update: ", myArray);
+console.log("After update: ", myArray[objIndex]);
