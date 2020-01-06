@@ -1,13 +1,21 @@
-const { gql } = require("apollo-server");
-
+const cors = require("cors");
+const uuidv4 = require("uuid/v4");
+const express = require("express");
+const fs = require("fs");
+const app = express();
+app.use(cors());
 const resolvers = {
   Query: {
-    getTodolist: () => {
-      return Object.values(Todo);
+    getTodoList: () => {
+      const file = fs.readFileSync("src/data.json", "utf8");
+      console.log(file);
+      return JSON.parse(file).Todo;
     }
   },
+
   Mutation: {
     addTodo: (_, { title }) => {
+      const file = fs.readFileSync("src/data.json", "utf8");
       const id = uuidv4();
       const newTodo = {
         id,
@@ -15,41 +23,69 @@ const resolvers = {
         completed: false
       };
       // console.log(Todo);
-      Todo[id] = newTodo;
-      // console.log(Todo);
-      return Object.values(Todo);
+      let jsonObj = JSON.parse(file);
+      console.log(jsonObj);
+      jsonObj.Todo.push(newTodo);
+      let jsonContent = JSON.stringify(jsonObj);
+      console.log(jsonContent);
+      fs.writeFileSync("src/data.json", jsonContent);
+      console.log("JSON file has been saved.");
+      return jsonObj.Todo;
     },
     editTitle: (_, { id, title }) => {
-      // const editTodoTitle = {
-      //   id,
-      //   title
-      // };
-      // Object.values(Todo).filter(Todo => Todo.id);
-      // console.log(Todo);
-      // Todo[title.data] = Todo[id] == editTodoTitle.id;
-      // Todo[id] = editTodoTitle;
-      console.log(Todo);
-      return Todo[id];
+      const file = fs.readFileSync("src/data.json", "utf8");
+      let jsonObj = JSON.parse(file);
+      console.log(jsonObj);
+      objIndex = jsonObj.Todo.findIndex(obj => obj.id == id);
+      jsonObj.Todo[objIndex].title = title;
+      let jsonContent = JSON.stringify(jsonObj);
+      console.log(jsonContent);
+      fs.writeFileSync("src/data.json", jsonContent);
+      console.log("JSON file has been saved.");
+      return jsonObj.Todo[objIndex];
+    },
+    editStatus: (_, { id, completed }) => {
+      const file = fs.readFileSync("src/data.json", "utf8");
+      let jsonObj = JSON.parse(file);
+      console.log(jsonObj);
+      objIndex = jsonObj.Todo.findIndex(obj => obj.id == id);
+      jsonObj.Todo[objIndex].completed = completed;
+      let jsonContent = JSON.stringify(jsonObj);
+      console.log(jsonContent);
+      fs.writeFileSync("src/data.json", jsonContent);
+      console.log("JSON file has been saved.");
+      return jsonObj.Todo[objIndex];
     },
     removeTodo: (_, { id }) => {
-      const { [id]: Todo, ...otherTodo } = Todo;
+      const file = fs.readFileSync("src/data.json", "utf8");
+      let jsonObj = JSON.parse(file);
+      console.log(jsonObj);
+      objIndex = jsonObj.Todo.findIndex(obj => obj.id == id);
+      // jsonObj.Todo[objIndex].completed = completed;
+      delete jsonObj.Todo[objIndex];
+      let jsonContent = JSON.stringify(jsonObj);
+      console.log(jsonContent);
+      fs.writeFileSync("src/data.json", jsonContent);
+      console.log("JSON file has been saved.");
 
-      if (!Todo) {
-        return false;
-      }
+      return jsonObj.Todo;
+    },
+    changePosition: (_, { id, position }) => {
+      const file = fs.readFileSync("src/data.json", "utf8");
+      let jsonObj = JSON.parse(file);
+      console.log(jsonObj);
+      objIndex = jsonObj.Todo.findIndex(obj => obj.id == id);
+      // delete jsonObj.Todo[objIndex];
+      let jsonchange = jsonObj.Todo[objIndex];
+      delete jsonObj.Todo[objIndex];
+      jsonObj.Todo.splice(position, 0, jsonchange);
+      let jsonContent = JSON.stringify(jsonObj);
+      console.log(jsonContent);
+      fs.writeFileSync("src/data.json", jsonContent);
+      console.log("JSON file has been saved.");
 
-      Todo = otherTodo;
-
-      return true;
-      //   Object.values(Todo).filter(Todo => Todo.id);
-      //   // console.log(Todo);
-      //   // Todo[title.data] = Todo[id] == editTodoTitle.id;
-      //   Todo[id] = editTodoTitle;
-      //   console.log(Todo);
-      // return [Todo];
-      // }
+      return jsonObj.Todo;
     }
   }
 };
-
 module.exports = resolvers;

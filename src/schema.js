@@ -12,6 +12,7 @@ const schema = gql`
     editTitle(id: ID!, title: String!): Todo
     editStatus(id: ID!, completed: Boolean!): Todo
     removeTodo(id: ID!): [Todo]
+    changePosition(id: ID!, position: Int!): [Todo]
   }
   type Query {
     getTodoList: [Todo]
