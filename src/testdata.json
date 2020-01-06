@@ -1,0 +1,59 @@
+{
+    "Todo": [
+        {
+            "id": "57b6e152-f7e8-4ff7-a872-7ac734d81940",
+            "title": "Download SQL Server",
+            "completed": true
+        },
+        {
+            "id": "b72f1d06-2f4d-40ad-bfcb-7780b178be44",
+            "title": "Launch the SQL Server Installation Center",
+            "completed": false
+        },
+        {
+            "id": "eee5a72e-0627-4340-80f0-f68b652fe1d4",
+            "title": "Start the Installation Wizard",
+            "completed": false
+        },
+        {
+            "id": "808aa9b0-f00c-4130-8c39-3093d38192d0",
+            "title": "Product Key",
+            "completed": false
+        },
+        {
+            "id": "e3bca651-9593-4815-875b-503395f27f42",
+            "title": "License Terms",
+            "completed": false
+        },
+        {
+            "id": "726088ec-98ff-4f01-8569-8979504a9c3d",
+            "title": "Microsoft Update",
+            "completed": false
+        },
+        {
+            "id": "d7d32080-ffae-4faa-be82-7ce9496c47ff",
+            "title": "pls",
+            "completed": false
+        },
+        {
+            "id": "73d5b7c9-70cf-439b-ab9b-1c29b516858d",
+            "title": "pls",
+            "completed": false
+        },
+        {
+            "id": "d136d483-4efd-4b6a-a4ad-4828ee040c59",
+            "title": "pls",
+            "completed": false
+        },
+        {
+            "id": "a9942c5d-a282-428c-811c-5f56fc436b12",
+            "title": "ss",
+            "completed": false
+        },
+        {
+            "id": "1171b6cb-1423-4fd6-9686-854765df8b3d",
+            "title": "cat",
+            "completed": false
+        }
+    ]
+}
