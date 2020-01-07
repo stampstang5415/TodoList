@@ -44,12 +44,16 @@ const resolvers = {
       console.log("JSON file has been saved.");
       return jsonObj.Todo[objIndex];
     },
-    editStatus: (_, { id, completed }) => {
+    editStatus: (_, { id }) => {
       const file = fs.readFileSync("src/data.json", "utf8");
       let jsonObj = JSON.parse(file);
       console.log(jsonObj);
       objIndex = jsonObj.Todo.findIndex(obj => obj.id == id);
-      jsonObj.Todo[objIndex].completed = completed;
+      if (jsonObj.Todo[objIndex].completed === true) {
+        jsonObj.Todo[objIndex].completed = false;
+      } else {
+        jsonObj.Todo[objIndex].completed = true;
+      }
       let jsonContent = JSON.stringify(jsonObj);
       console.log(jsonContent);
       fs.writeFileSync("src/data.json", jsonContent);

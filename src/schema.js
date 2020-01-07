@@ -10,7 +10,7 @@ const schema = gql`
   type Mutation {
     addTodo(title: String!): [Todo]
     editTitle(id: ID!, title: String!): Todo
-    editStatus(id: ID!, completed: Boolean!): Todo
+    editStatus(id: ID!): Todo
     removeTodo(id: ID!): [Todo]
     changePosition(id: ID!, position: Int!): [Todo]
   }
