@@ -63,11 +63,14 @@ const resolvers = {
       let jsonObj = JSON.parse(file);
       console.log(jsonObj);
       objIndex = jsonObj.Todo.findIndex(obj => obj.id == id);
-      // jsonObj.Todo[objIndex].completed = completed;
-      // delete jsonObj.Todo[objIndex];
+      //
       jsonObj.Todo.splice(objIndex, 1);
+
+      // ghjh
       let jsonContent = JSON.stringify(jsonObj);
       console.log(jsonContent);
+
+      //
       fs.writeFileSync("src/data.json", jsonContent);
       console.log("JSON file has been saved.");
       return jsonObj.Todo;
