@@ -12,6 +12,6 @@ const server = new ApolloServer({
 });
 
 server.applyMiddleware({ app, path: "/playground" });
-app.listen({ port: 3012 }, () => {
-  console.log("Apollo Server on http://localhost:3012/playground");
+app.listen({ port: 5000 }, () => {
+  console.log("Apollo Server on http://localhost:5000/playground");
 });

@@ -8,11 +8,11 @@ const schema = gql`
     # priority: Int!
   }
   type Mutation {
-    addTodo(title: String!): [Todo]
+    addTodo(title: String!): Todo
     editTitle(id: ID!, title: String!): Todo
-    editStatus(id: ID!): Todo
+    editStatus(id: ID!, completed: Boolean!): Todo
     removeTodo(id: ID!): [Todo]
-    changePosition(id: ID!, position: Int!): [Todo]
+    changePosition(id: ID!, position: Int!): Todo
   }
   type Query {
     getTodoList: [Todo]
