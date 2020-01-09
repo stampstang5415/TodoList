@@ -14,7 +14,7 @@ const resolvers = {
   },
 
   Mutation: {
-    addTodo: (_, { title }) => {
+    addTodo: (parent, { title }) => {
       const file = fs.readFileSync("src/data.json", "utf8");
       const id = uuidv4();
       const newTodo = {
@@ -34,7 +34,7 @@ const resolvers = {
       console.log("JSON file has been saved.");
       return jsonObj.Todo[objIndex];
     },
-    editTitle: (_, { id, title }) => {
+    editTitle: (parent, { id, title }) => {
       const file = fs.readFileSync("src/data.json", "utf8");
       let jsonObj = JSON.parse(file);
       console.log(jsonObj);
@@ -46,7 +46,7 @@ const resolvers = {
       console.log("JSON file has been saved.");
       return jsonObj.Todo[objIndex];
     },
-    editStatus: (_, { id, completed }) => {
+    editStatus: (parent, { id, completed }) => {
       const file = fs.readFileSync("src/data.json", "utf8");
       let jsonObj = JSON.parse(file);
       console.log(jsonObj);
@@ -58,7 +58,7 @@ const resolvers = {
       console.log("JSON file has been saved.");
       return jsonObj.Todo[objIndex];
     },
-    removeTodo: (_, { id }) => {
+    removeTodo: (parent, { id }) => {
       const file = fs.readFileSync("src/data.json", "utf8");
       let jsonObj = JSON.parse(file);
       console.log(jsonObj);
@@ -75,7 +75,7 @@ const resolvers = {
       console.log("JSON file has been saved.");
       return jsonObj.Todo;
     },
-    changePosition: (_, { id, position }) => {
+    changePosition: (parent, { id, position }) => {
       const file = fs.readFileSync("src/data.json", "utf8");
       let jsonObj = JSON.parse(file);
       console.log(jsonObj);
