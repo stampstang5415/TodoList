@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import List from "./Component/list.js";
-import Todobar from "./Component/todobar.js";
+// import Todobar from "./Component/todobar.js";
 import Main from "./Component/main.js";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
@@ -16,15 +16,9 @@ class App extends React.Component {
     return (
       <ApolloProvider client={client}>
         <div className="container">
-          <Todobar />
-          <div class="row">
-            <div class="col">
-              <Main />
-            </div>
-            <div class="col">
-              <List />
-            </div>
-          </div>
+          {/* <Todobar /> */}
+          <Main />
+          <List />
         </div>
       </ApolloProvider>
     );
