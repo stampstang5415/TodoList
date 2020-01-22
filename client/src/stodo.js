@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import uuid from "uuid";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+// import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const client = new ApolloClient({
   uri: "http://localhost:5000/playground"
