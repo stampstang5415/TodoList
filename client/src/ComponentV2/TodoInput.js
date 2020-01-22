@@ -24,13 +24,14 @@ const ADD_TODO = gql`
 export class TodoInput extends Component {
   //ส่วน input รับค่า addtodo ส่งไป Mutations
   render() {
-    const {
-      item,
-      // items,
-      handleChange
-      // handleSubmit
-      //   handleDelete
-    } = this.props;
+    let input;
+    // const {
+    //   item,
+    //   // items,
+    //   handleChange
+    //   // handleSubmit
+    //   //   handleDelete
+    // } = this.props;
     return (
       <div className="card card-body my-3">
         <Mutation mutation={ADD_TODO}>

@@ -41,12 +41,12 @@ class stodo extends React.Component {
       editItem: false
     });
   };
-  handleDelete = id => {
-    const filteredItems = this.state.items.filter(item => item.id != id);
-    this.setState({
-      items: filteredItems
-    });
-  };
+  // handleDelete = id => {
+  //   const filteredItems = this.state.items.filter(item => item.id != id);
+  //   this.setState({
+  //     items: filteredItems
+  //   });
+  // };
   render() {
     // หน้าหลักส่งไป render
     return (

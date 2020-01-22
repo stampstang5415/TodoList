@@ -1,24 +1,23 @@
 import React, { Component } from "react";
 import "./Checkbox.css";
 export class TodoItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { Height: 0, Width: 0, elmnt };
-  }
-  getsize() {
-    this.setState(state => ({
-      Height: elmnt.offsetHeight,
-      Width: elmnt.offsetWidth
-    }));
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { Height: 0, Width: 0, elmnt };
+  // }
+  // getsize() {
+  //   this.setState(state => ({
+  //     Height: elmnt.offsetHeight,
+  //     Width: elmnt.offsetWidth
+  //   }));
+  // }
   componentDidMount() {
-    this.elmnt = document.getElementById("list")(() => this.getsize(), 1000);
-    console.log(Height, "px");
-    console.log(Width, "px");
+    // this.elmnt = document.getElementById("list")(() => this.getsize(), 1000);
+    // console.log(Height, "px");
+    // console.log(Width, "px");
   }
   render() {
     const { title } = this.props;
-    console.log;
     return (
       <li id="list" class="list-item">
         <input type="checkbox" class="hidden-box" id={title} />
