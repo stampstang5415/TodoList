@@ -1,12 +1,21 @@
 import React, {Component} from "react";
 import "./TodoItem.css";
-// import "./Checkbox.css";
-import {Query} from "@apollo/react-components";
+import "./Checkbox.css";
+import {Mutation, Query} from "@apollo/react-components";
 import gql from "graphql-tag";
 
 const TODOLIST_QUERY = gql`
     query TodoListQuery {
         getTodoList {
+            id
+            title
+            completed
+        }
+    }
+`;
+const REMOVE_TODO = gql`
+    mutation EditStatus($id: ID!) {
+        removeTodo(id: $id) {
             id
             title
             completed
@@ -36,17 +45,24 @@ export class TodoItem extends Component {
     }
   }
   handleEditTitle = event => {
-    if (this.state.show_Display === false) {
-      // event.preventDefault();
-      this.myEditButton.current.style.display = "none";
-      this.myEdit.current.style.display = "";
-      this.setState({show_Display: true});
-      console.log(this.myEdit.current.style.display);
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+      x.style.display = "block";
     } else {
-      // event.preventDefault();
-      this.myEdit.current.style.display = "none";
-      console.log(this.myEdit.current.style.display);
+      x.style.display = "none";
     }
+
+    // if (this.state.show_Display === false) {
+    //   // event.preventDefault();
+    //   this.myEditButton.current.style.display = "none";
+    //   this.myEdit.current.style.display = "";
+    //   this.setState({show_Display: true});
+    //   console.log(this.myEdit.current.style.display);
+    // } else {
+    //   // event.preventDefault();
+    //   this.myEdit.current.style.display = "none";
+    //   console.log(this.myEdit.current.style.display);
+    // }
   }
   handleHiddenEdit= event => {
     event.preventDefault();
@@ -61,7 +77,7 @@ export class TodoItem extends Component {
 
     return (
       <Query query={TODOLIST_QUERY}>
-        {({loading, error, data}) => {
+        {({loading, error, data,refetch }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
           // console.log(data);
@@ -87,7 +103,8 @@ export class TodoItem extends Component {
                     <span className="check--label-text">{title}</span>
 
                         <form
-                          className="inputEdit"
+                          id="myDIV"
+                          // className="inputEdit"
                           ref={this.myEdit}
                           onSubmit={handleUpdateTitle}
                         >
@@ -96,15 +113,35 @@ export class TodoItem extends Component {
                             onChange={this.handleChangeTitle}
                             onKeyDown={this.handleEnterPressed}
                           />
-                          <button type="submit" className="mx-2 text-success" onClick={this.handleHiddenEdit} ><i className="fas fa-pen" /></button>
+                          {/*<button type="submit" className="mx-2 text-success"><i className="fas fa-pen" /></button>*/}
                         </form>
                     <div className="todo-icon justify-content-end ">
-              <span className="mx-2 text-success">
-                <i className="fas fa-pen" ref={this.myEditButton} onClick={this.handleEditTitle}/>
-              </span>
-                      <span className="mx-2 text-danger">
-                <i className="fas fa-trash"/>
-              </span>
+              {/*<span className="mx-2 text-success">*/}
+                        {/*  <i className="fas fa-pen" ref={this.myEditButton} onClick={this.handleEditTitle}/>*/}
+                        {/*</span>*/}
+                {/*        <span className="mx-2 text-danger">*/}
+                {/*<i className="fas fa-trash"/>*/}
+              {/*</span>*/}
+                      <Mutation
+                        mutation={REMOVE_TODO}
+                        update={(cache, {data: {Todo}}) => {
+                          const {removeTodo} = cache.readQuery({query: TODOLIST_QUERY});
+                          cache.writeQuery({
+                            query: TODOLIST_QUERY,
+                            data: {removeTodo: removeTodo.concat([Todo])},
+                          });
+                        }}
+                      >
+                        {removeTodo => (
+                          <form onSubmit={e => {
+                            e.preventDefault();
+                            removeTodo({variables: {id: id}});
+
+                          }}>
+                      <button type="submit" className="mx-2 text-danger"><i className="fas fa-trash" /></button>
+                            </form>
+                        )}
+                      </Mutation>
                     </div>
                   </label>
                 </li>
