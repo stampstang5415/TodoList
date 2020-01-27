@@ -97,15 +97,15 @@ export class TodoInput extends Component {
 
               }}
             >
-              <div className="input-group">
+              <div className="input-group  ">
                 <div className="input-group-prepend">
-                  <div className="input-group-text bg-primary text-white">
+                  <div className="input-group-text m-0 bg-primary text-white">
                     <i className="fas fa-book"/>
                   </div>
                 </div>
                 <input
                   type="text"
-                  className="form-control inputtext"
+                  className="form-control m-0 inputtext"
                   value={this.state.newtodo}
                   onChange={this.handleChange}
                   onKeyDown={this.handleEnterPressed}

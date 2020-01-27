@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import "./TodoItem.css";
-import "./Checkbox.css";
+// import "./TodoItem.css";
+// import "./Checkbox.css";
 import {Mutation, Query} from "@apollo/react-components";
 import gql from "graphql-tag";
 
@@ -73,11 +73,11 @@ export class TodoItem extends Component {
   }
 
   render() {
-    const {editStatus,editTitle,removeTodo} = this.props
+    const {editStatus,editTitle} = this.props
 
     return (
       <Query query={TODOLIST_QUERY}>
-        {({loading, error, data,refetch }) => {
+        {({loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
           // console.log(data);
@@ -92,8 +92,9 @@ export class TodoItem extends Component {
               editTitle({variables: {id, title: this.state.new_Title}});
             }
             return (
-              <div key={id}>
+              <div className="row" key={id}>
                 <li id="list" className="list-item">
+
                   <input
                     type="checkbox" className="hidden-box" id={title} checked={completed}
                     onChange={handleUpdateStatus}
@@ -103,13 +104,12 @@ export class TodoItem extends Component {
                     <span className="check--label-text">{title}</span>
 
                         <form
-                          id="myDIV"
+
                           // className="inputEdit"
                           ref={this.myEdit}
                           onSubmit={handleUpdateTitle}
                         >
                           <input
-                            // value={this.state.new_Title}
                             onChange={this.handleChangeTitle}
                             onKeyDown={this.handleEnterPressed}
                           />
@@ -124,11 +124,11 @@ export class TodoItem extends Component {
               {/*</span>*/}
                       <Mutation
                         mutation={REMOVE_TODO}
-                        update={(cache, {data: {Todo}}) => {
-                          const {removeTodo} = cache.readQuery({query: TODOLIST_QUERY});
+                        update={(cache, {data: {removeTodo}}) => {
+                          const {getTodoList} = cache.readQuery({query: TODOLIST_QUERY});
                           cache.writeQuery({
                             query: TODOLIST_QUERY,
-                            data: {removeTodo: removeTodo.concat([Todo])},
+                            data: {getTodoList: getTodoList.filter(e => e.id !== id)},
                           });
                         }}
                       >
