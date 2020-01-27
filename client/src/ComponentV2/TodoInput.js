@@ -44,7 +44,7 @@ const UPDATE_STATUS = gql`
 export class TodoInput extends Component {
   constructor(props) {
     super(props);
-    this.state = {new_todo: '', reverseCounter: 0};
+    this.state = {new_todo: '', reverseCounter: "Newest" };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleEnterPressed = this.handleEnterPressed.bind(this);
@@ -65,10 +65,10 @@ export class TodoInput extends Component {
     }
   }
   reverseTodo(){
-    if (this.state.reverseCounter === 0) {
-      this.setState({reverseCounter: 1});
+    if (this.state.reverseCounter === "Newest") {
+      this.setState({reverseCounter: "Oldest"});
     }else {
-      this.setState({reverseCounter: 0});
+      this.setState({reverseCounter: "Newest"});
     }
   }
   componentDidMount() {
@@ -123,7 +123,7 @@ export class TodoInput extends Component {
         {/* เรียกcomponent TodoItem แสดงlistไอเทม */}
 
         <div>
-
+            <h2>{this.state.reverseCounter}</h2>
           <Mutation mutation={UPDATE_TITLE} >
             {editTitle => (
           <Mutation mutation={UPDATE_STATUS} children={editStatus => <TodoItem reverseCounter={this.state.reverseCounter}  editTitle={editTitle} editStatus={editStatus}/>} />

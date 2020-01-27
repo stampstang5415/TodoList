@@ -84,7 +84,7 @@ export class TodoItem extends Component {
           let reverseTodo = {}
            // console.log(data);
            // return <h1>test</h1>;
-          if (reverseCounter !== 1 ){
+          if (reverseCounter !== "Oldest" ){
              reverseTodo = data.getTodoList.slice(0).reverse()
           }else {
              reverseTodo = data.getTodoList
