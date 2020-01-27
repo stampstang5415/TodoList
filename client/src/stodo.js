@@ -12,12 +12,9 @@ const client = new ApolloClient({
 });
 
 class stodo extends React.Component {
-  // handleDelete = id => {
-  //   const filteredItems = this.state.items.filter(item => item.id != id);
-  //   this.setState({
-  //     items: filteredItems
-  //   });
-  // };
+  // componentWillUnmount() {
+  //   client.resetStore()
+  // }
   render() {
     // หน้าหลักส่งไป render
     return (

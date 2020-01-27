@@ -40,15 +40,6 @@ const UPDATE_STATUS = gql`
         }
     }
 `;
-const REMOVE_TODO = gql`
-    mutation EditStatus($id: ID!) {
-        removeTodo(id: $id) {
-            id
-            title
-            completed
-        }
-    }
-`;
 
 export class TodoInput extends Component {
   constructor(props) {
@@ -73,15 +64,12 @@ export class TodoInput extends Component {
       console.log("A",event.currentTarget.value);
     }
   }
-  reverseTodo(event){
-    // if (this.state.reverseCounter === 0) {
-    //   this.setState({reverseCounter: 1});
-    //     const {getTodoList} = cache.readQuery({query: TODOLIST_QUERY});
-    //     cache.writeQuery({
-    //       query: TODOLIST_QUERY,
-    //       data: {getTodoList: getTodoList},
-    //     });
-    // }
+  reverseTodo(){
+    if (this.state.reverseCounter === 0) {
+      this.setState({reverseCounter: 1});
+    }else {
+      this.setState({reverseCounter: 0});
+    }
   }
   componentDidMount() {
 
@@ -105,9 +93,10 @@ export class TodoInput extends Component {
             <form
               onSubmit={e => {
                 e.preventDefault();
-                addTodo({variables: {title: this.state.new_todo}});
-                e.currentTarget.value = "";
-
+                if(this.state.new_todo !== ""){
+                  addTodo({variables: {title: this.state.new_todo}});
+                  e.currentTarget.value = "";
+                }
               }}
             >
               <div className="input-group  ">
@@ -124,7 +113,7 @@ export class TodoInput extends Component {
                   onKeyDown={this.handleEnterPressed}
 
                 />
-                <div className="input-group-text m-0 bg-primary text-white"  >
+                <div className="input-group-text m-0 bg-primary text-white" onClick={this.reverseTodo} >
                   <i className="fas fa-retweet"  />
                 </div>
               </div>
@@ -134,15 +123,12 @@ export class TodoInput extends Component {
         {/* เรียกcomponent TodoItem แสดงlistไอเทม */}
 
         <div>
-          <Mutation mutation={REMOVE_TODO} >
-            {removeTodo => (
+
           <Mutation mutation={UPDATE_TITLE} >
             {editTitle => (
-          <Mutation mutation={UPDATE_STATUS} children={editStatus => <TodoItem removeTodo={removeTodo} editTitle={editTitle} editStatus={editStatus}/>} />
+          <Mutation mutation={UPDATE_STATUS} children={editStatus => <TodoItem reverseCounter={this.state.reverseCounter}  editTitle={editTitle} editStatus={editStatus}/>} />
               )}
             </Mutation>
-            )}
-          </Mutation>
         </div>
       </div>
     );

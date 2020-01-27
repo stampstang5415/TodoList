@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 // import "./TodoItem.css";
-// import "./Checkbox.css";
+import "./Checkbox.css";
 import {Mutation, Query} from "@apollo/react-components";
 import gql from "graphql-tag";
 
@@ -25,7 +25,7 @@ const REMOVE_TODO = gql`
 export class TodoItem extends Component {
   constructor(props) {
     super(props);
-    this.state = {new_Title: "", show_Display: false};
+    this.state = {new_Title: "", show_Display: false, reverseCounter: 0};
     this.handleChangeTitle = this.handleChangeTitle.bind(this);
     // this.handleChangeStatus = this.handleChangeStatus.bind(this);
     // this.handleEditTitle = this.handleEditTitle.bind(this);
@@ -72,17 +72,24 @@ export class TodoItem extends Component {
     // this.myEdit.current.style.display = "none";
   }
 
+
   render() {
-    const {editStatus,editTitle} = this.props
+    const {editStatus,editTitle,reverseCounter} = this.props
 
     return (
       <Query query={TODOLIST_QUERY}>
         {({loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
-          // console.log(data);
-          // return <h1>test</h1>;
-          return data.getTodoList.map(({id, title, completed}) => {
+          let reverseTodo = {}
+           // console.log(data);
+           // return <h1>test</h1>;
+          if (reverseCounter !== 1 ){
+             reverseTodo = data.getTodoList.slice(0).reverse()
+          }else {
+             reverseTodo = data.getTodoList
+          }
+          return  reverseTodo.map(({id, title, completed}) => {
             const handleUpdateStatus = event => {
               event.preventDefault();
               editStatus({variables: {id, completed: event.target.checked}});
