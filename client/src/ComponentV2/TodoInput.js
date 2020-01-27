@@ -53,24 +53,36 @@ const REMOVE_TODO = gql`
 export class TodoInput extends Component {
   constructor(props) {
     super(props);
-    this.state = {new_todo: '', todo_list: []};
+    this.state = {new_todo: '', reverseCounter: 0};
 
     this.handleChange = this.handleChange.bind(this);
-    // this.handleEnterPressed = this.handleEnterPressed.bind(this);
+    this.handleEnterPressed = this.handleEnterPressed.bind(this);
+    this.reverseTodo = this.reverseTodo.bind(this);
   }
 
   handleChange(event) {
     this.setState({new_todo: event.target.value});
   }
 
-  handleEnterPressed = event => {
+  handleEnterPressed (event) {
     if (event.key === "Enter") {
       console.log("Submit");
+      console.log("B",event.currentTarget.value);
       event.currentTarget.value = "";
-
+      // event.preventDefault();
+      console.log("A",event.currentTarget.value);
     }
   }
-
+  reverseTodo(event){
+    // if (this.state.reverseCounter === 0) {
+    //   this.setState({reverseCounter: 1});
+    //     const {getTodoList} = cache.readQuery({query: TODOLIST_QUERY});
+    //     cache.writeQuery({
+    //       query: TODOLIST_QUERY,
+    //       data: {getTodoList: getTodoList},
+    //     });
+    // }
+  }
   componentDidMount() {
 
   }
@@ -94,6 +106,7 @@ export class TodoInput extends Component {
               onSubmit={e => {
                 e.preventDefault();
                 addTodo({variables: {title: this.state.new_todo}});
+                e.currentTarget.value = "";
 
               }}
             >
@@ -106,12 +119,14 @@ export class TodoInput extends Component {
                 <input
                   type="text"
                   className="form-control m-0 inputtext"
-                  value={this.state.newtodo}
+                  // value={this.state.new_todo}
                   onChange={this.handleChange}
                   onKeyDown={this.handleEnterPressed}
 
                 />
-
+                <div className="input-group-text m-0 bg-primary text-white"  >
+                  <i className="fas fa-retweet"  />
+                </div>
               </div>
             </form>
           )}
