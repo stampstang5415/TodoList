@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 // import "./TodoItem.css";
 import "./Checkbox.css";
+import Editform from "./Editform.js";
 import {Mutation, Query} from "@apollo/react-components";
 import gql from "graphql-tag";
 
@@ -120,10 +121,11 @@ export class TodoItem extends Component {
                           ref={this.myEdit}
                           onSubmit={handleUpdateTitle}
                         >
-                          <input
-                            onChange={this.handleChangeTitle}
-                            onKeyDown={this.handleEnterPressed}
-                          />
+                          <Editform handleChangeTitle={this.handleChangeTitle}  handleEnterPressed={this.handleEnterPressed} />
+                          {/*<input*/}
+                          {/*  onChange={this.handleChangeTitle}*/}
+                          {/*  onKeyDown={this.handleEnterPressed}*/}
+                          {/*/>*/}
                           {/*<button type="submit" className="mx-2 text-success"><i className="fas fa-pen" /></button>*/}
                         </form>
                     <div className="todo-icon justify-content-end ">
