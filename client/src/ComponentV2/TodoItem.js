@@ -44,7 +44,6 @@ export class TodoItem extends Component {
     if (event.key === "Enter") {
       console.log("Submit");
       event.currentTarget.value = "";
-
     }
   };
   // handleEditTitle = event => {
@@ -71,6 +70,17 @@ export class TodoItem extends Component {
   //   event.preventDefault();
   //   this.myEdit.current.style.display = "";
   // }
+  Hide_and_Show=()=> {
+    let inputEdit = document.getElementById("inputEdit");
+    let buttonInputEdit = document.getElementById("buttonInputEdit");
+    if (inputEdit.style.display === "none") {
+      inputEdit.style.display = "block";
+      buttonInputEdit.style.display = "none";
+    } else {
+      inputEdit.style.display = "none";
+      buttonInputEdit.style.display = "block";
+    }
+  };
   componentDidMount() {
     // this.myEdit.current.style.display = "none";
   }
@@ -78,7 +88,6 @@ export class TodoItem extends Component {
 
   render() {
     const {editStatus,editTitle,reverseCounter} = this.props;
-    console.log(reverseCounter);
     return (
       <Query query={TODOLIST_QUERY} variables={ { sort: reverseCounter} }   >
         {({loading, error, data  }) => {
@@ -91,7 +100,6 @@ export class TodoItem extends Component {
           //    reverseTodo = data.getTodoList
           // }
           // refetch()
-          console.log("test");
           return  data.getTodoList.map(({id, title, completed}) => {
             const handleUpdateStatus = event => {
               event.preventDefault();
@@ -121,7 +129,7 @@ export class TodoItem extends Component {
                           ref={this.myEdit}
                           onSubmit={handleUpdateTitle}
                         >
-                          <Editform handleChangeTitle={this.handleChangeTitle}  handleEnterPressed={this.handleEnterPressed} />
+                          <Editform Hide_and_Show={this.Hide_and_Show} handleChangeTitle={this.handleChangeTitle}  handleEnterPressed={this.handleEnterPressed} />
                           {/*<input*/}
                           {/*  onChange={this.handleChangeTitle}*/}
                           {/*  onKeyDown={this.handleEnterPressed}*/}
