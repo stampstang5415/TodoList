@@ -9,7 +9,7 @@ const ADD_TODO = gql`
             id
             title
             completed
-            addtime
+            
         }
     }
 `;
@@ -20,7 +20,7 @@ const TODOLIST_QUERY = gql`
             id
             title
             completed
-            addtime
+            
         }
     }
 `;
@@ -30,7 +30,7 @@ const UPDATE_TITLE = gql`
             id
             title
             completed
-            addtime
+            
         }
     }
 `;
@@ -40,7 +40,7 @@ const UPDATE_STATUS = gql`
             id
             title
             completed
-            addtime
+            
         }
     }
 `;

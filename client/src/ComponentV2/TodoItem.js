@@ -10,7 +10,7 @@ const TODOLIST_QUERY = gql`
             id
             title
             completed
-            addtime
+            
         }
     }
 `;
@@ -20,7 +20,7 @@ const REMOVE_TODO = gql`
             id
             title
             completed
-            addtime
+            
         }
     }
 `;
@@ -80,7 +80,7 @@ export class TodoItem extends Component {
     console.log(reverseCounter);
     return (
       <Query query={TODOLIST_QUERY} variables={ { sort: reverseCounter} }   >
-        {({loading, error, data ,refetch }) => {
+        {({loading, error, data  }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
            // console.log(data);
@@ -91,7 +91,7 @@ export class TodoItem extends Component {
           // }
           // refetch()
           console.log("test");
-          return  data.getTodoList.map(({id, title, completed,addtime}) => {
+          return  data.getTodoList.map(({id, title, completed}) => {
             const handleUpdateStatus = event => {
               event.preventDefault();
 
@@ -153,7 +153,6 @@ export class TodoItem extends Component {
                             console.log("detele");
                           }}>
                       <button type="submit" className="mx-2 text-danger"><i className="fas fa-trash" /></button>
-                            <p>{addtime}</p>
                             </form>
                         )}
                       </Mutation>

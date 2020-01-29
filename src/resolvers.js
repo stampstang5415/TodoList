@@ -9,11 +9,22 @@ const resolvers = {
     getTodoList: (parent,{sort}) => {
       const file = fs.readFileSync("src/data.json", "utf8");
         if (sort === "Oldest" ){
-          console.log(file);
-          return JSON.parse(file).Todo;
+          // console.log(file);
+          let jsonObj = JSON.parse(file);
+          console.log(jsonObj);
+          jsonObj.Todo.sort(function(a,b){
+            return new Date(a.addtime) - new Date(b.addtime);
+          });
+          return jsonObj.Todo;
+
         }if (sort === "Newest"){
         console.log(file);
-        return JSON.parse(file).Todo.reverse();
+        let jsonObj = JSON.parse(file);
+        console.log(jsonObj);
+        jsonObj.Todo.sort(function(a,b){
+          return new Date(b.addtime) - new Date(a.addtime);
+        });
+        return jsonObj.Todo;
         }else{
         console.log(file);
         return JSON.parse(file).Todo;
