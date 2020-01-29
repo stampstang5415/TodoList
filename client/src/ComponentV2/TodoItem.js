@@ -5,11 +5,12 @@ import {Mutation, Query} from "@apollo/react-components";
 import gql from "graphql-tag";
 
 const TODOLIST_QUERY = gql`
-    query TodoListQuery {
-        getTodoList {
+    query TodoListQuery($sort: String) {
+        getTodoList(sort: $sort) {
             id
             title
             completed
+            addtime
         }
     }
 `;
@@ -19,18 +20,19 @@ const REMOVE_TODO = gql`
             id
             title
             completed
+            addtime
         }
     }
 `;
 export class TodoItem extends Component {
   constructor(props) {
     super(props);
-    this.state = {new_Title: "", show_Display: false, reverseCounter: 0};
+    this.state = {new_Title: "", show_Display: false,re:"Newest"};
     this.handleChangeTitle = this.handleChangeTitle.bind(this);
     // this.handleChangeStatus = this.handleChangeStatus.bind(this);
     // this.handleEditTitle = this.handleEditTitle.bind(this);
     this.myEdit = React.createRef();
-    this.myEditButton = React.createRef();
+    // this.myEditButton = React.createRef();
   }
 
   handleChangeTitle(event) {
@@ -43,14 +45,14 @@ export class TodoItem extends Component {
       event.currentTarget.value = "";
 
     }
-  }
-  handleEditTitle = event => {
-    var x = document.getElementById("myDIV");
-    if (x.style.display === "none") {
-      x.style.display = "block";
-    } else {
-      x.style.display = "none";
-    }
+  };
+  // handleEditTitle = event => {
+  //   var x = document.getElementById("myDIV");
+  //   if (x.style.display === "none") {
+  //     x.style.display = "block";
+  //   } else {
+  //     x.style.display = "none";
+  //   }
 
     // if (this.state.show_Display === false) {
     //   // event.preventDefault();
@@ -63,43 +65,45 @@ export class TodoItem extends Component {
     //   this.myEdit.current.style.display = "none";
     //   console.log(this.myEdit.current.style.display);
     // }
-  }
-  handleHiddenEdit= event => {
-    event.preventDefault();
-    this.myEdit.current.style.display = "";
-  }
+  // }
+  // handleHiddenEdit= event => {
+  //   event.preventDefault();
+  //   this.myEdit.current.style.display = "";
+  // }
   componentDidMount() {
     // this.myEdit.current.style.display = "none";
   }
 
 
   render() {
-    const {editStatus,editTitle,reverseCounter} = this.props
-
+    const {editStatus,editTitle,reverseCounter} = this.props;
+    console.log(reverseCounter);
     return (
-      <Query query={TODOLIST_QUERY}>
-        {({loading, error, data }) => {
+      <Query query={TODOLIST_QUERY} variables={ { sort: reverseCounter} }   >
+        {({loading, error, data ,refetch }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :(</p>;
-          let reverseTodo = {}
            // console.log(data);
-           // return <h1>test</h1>;
-          if (reverseCounter !== "Oldest" ){
-             reverseTodo = data.getTodoList.slice(0).reverse()
-          }else {
-             reverseTodo = data.getTodoList
-          }
-          return  reverseTodo.map(({id, title, completed}) => {
+          // if (reverseCounter !== "Oldest" ){
+          //    reverseTodo = data.getTodoList.slice(0).reverse()
+          // }else {
+          //    reverseTodo = data.getTodoList
+          // }
+          // refetch()
+          console.log("test");
+          return  data.getTodoList.map(({id, title, completed,addtime}) => {
             const handleUpdateStatus = event => {
               event.preventDefault();
+
               editStatus({variables: {id, completed: event.target.checked}});
-            }
+            };
             const handleUpdateTitle = event => {
               event.preventDefault();
               editTitle({variables: {id, title: this.state.new_Title}});
-            }
+            };
             return (
               <div className="row" key={id}>
+                {/*<h2  onClick={() => refetch()} >{reverseCounter}</h2>*/}
                 <li id="list" className="list-item">
 
                   <input
@@ -131,21 +135,25 @@ export class TodoItem extends Component {
               {/*</span>*/}
                       <Mutation
                         mutation={REMOVE_TODO}
-                        update={(cache, {data: {removeTodo}}) => {
-                          const {getTodoList} = cache.readQuery({query: TODOLIST_QUERY});
-                          cache.writeQuery({
-                            query: TODOLIST_QUERY,
-                            data: {getTodoList: getTodoList.filter(e => e.id !== id)},
-                          });
-                        }}
+                        refetchQueries={() => [{ query: TODOLIST_QUERY, variables: { sort: "Newest" } },{ query: TODOLIST_QUERY, variables: { sort: "Oldest" } }]}
+                        // update={(cache,{data: {removeTodo}} ) => {
+                        //   // const {getTodoList} = cache.readQuery({query: TODOLIST_QUERY, variables:{  sort: reverseCounter }});
+                        //   cache.writeQuery({
+                        //     query: TODOLIST_QUERY,
+                        //     variables:{  sort: reverseCounter },
+                        //     data: {getTodoList: removeTodo},
+                        //     // data: {getTodoList: getTodoList.filter(e => e.id !== id)},
+                        //   });
+                        // }}
                       >
                         {removeTodo => (
                           <form onSubmit={e => {
                             e.preventDefault();
                             removeTodo({variables: {id: id}});
-
+                            console.log("detele");
                           }}>
                       <button type="submit" className="mx-2 text-danger"><i className="fas fa-trash" /></button>
+                            <p>{addtime}</p>
                             </form>
                         )}
                       </Mutation>

@@ -6,10 +6,18 @@ const app = express();
 app.use(cors());
 const resolvers = {
   Query: {
-    getTodoList: () => {
+    getTodoList: (parent,{sort}) => {
       const file = fs.readFileSync("src/data.json", "utf8");
-      console.log(file);
-      return JSON.parse(file).Todo;
+        if (sort === "Oldest" ){
+          console.log(file);
+          return JSON.parse(file).Todo;
+        }if (sort === "Newest"){
+        console.log(file);
+        return JSON.parse(file).Todo.reverse();
+        }else{
+        console.log(file);
+        return JSON.parse(file).Todo;
+      }
     }
   },
 
@@ -17,10 +25,12 @@ const resolvers = {
     addTodo: (parent, { title }) => {
       const file = fs.readFileSync("src/data.json", "utf8");
       const id = uuidv4();
+      const date = new Date();
       const newTodo = {
         id,
         title,
-        completed: false
+        completed: false,
+        addtime : date
       };
       // console.log(Todo);
       let jsonObj = JSON.parse(file);

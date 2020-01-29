@@ -1,10 +1,12 @@
 const { gql } = require("apollo-server");
 
 const schema = gql`
+scalar Date
   type Todo {
     id: ID!
     title: String
     completed: Boolean
+    addtime: Date
     # priority: Int!
   }
   type Mutation {
@@ -15,7 +17,7 @@ const schema = gql`
     changePosition(id: ID!, position: Int!): Todo
   }
   type Query {
-    getTodoList: [Todo]
+    getTodoList(sort: String): [Todo]
   }
 `;
 
