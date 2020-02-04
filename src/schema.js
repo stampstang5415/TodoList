@@ -13,6 +13,7 @@ scalar Date
     addTodo(title: String!): Todo
     editTitle(id: ID!, title: String!): Todo
     editStatus(id: ID!, completed: Boolean!): Todo
+#    checkAllStatus(completed: Boolean!): [Todo]
     removeTodo(id: ID!): [Todo]
     changePosition(id: ID!, position: Int!): Todo
   }

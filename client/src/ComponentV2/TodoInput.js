@@ -1,6 +1,6 @@
-import React, {Component} from "react";
+import React,{ useState } from "react";
 import TodoItem from "./TodoItem.js";
-import {Mutation} from "@apollo/react-components";
+import { useMutation } from '@apollo/react-hooks';
 import gql from "graphql-tag";
 
 const ADD_TODO = gql`
@@ -13,7 +13,6 @@ const ADD_TODO = gql`
         }
     }
 `;
-
 const TODOLIST_QUERY = gql`
     query TodoListQuery($sort: String) {
         getTodoList(sort: $sort) {
@@ -44,71 +43,39 @@ const UPDATE_STATUS = gql`
         }
     }
 `;
-
-export class TodoInput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {new_todo: '', reverseCounter: "Newest" };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleEnterPressed = this.handleEnterPressed.bind(this);
-    this.reverseTodo = this.reverseTodo.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({new_todo: event.target.value});
-  }
-
-  handleEnterPressed (event) {
+function TodoInput(){
+  const [new_todo, setNew_todo] = useState("");
+  const [reverseList, setReverseList] = useState("Oldest");
+  const handleChange=(event)=> {
+    setNew_todo(event.target.value);
+  };
+  const [addTodo] = useMutation(ADD_TODO,{refetchQueries: [{query: TODOLIST_QUERY, variables: { sort: "Newest" }},{query: TODOLIST_QUERY, variables: { sort: "Oldest" }}],
+    awaitRefetchQueries: true,} );
+  const [editTitle] = useMutation(UPDATE_TITLE);
+  const [editStatus] = useMutation(UPDATE_STATUS);
+  const handleEnterPressed =(event)=> {
     if (event.key === "Enter") {
       console.log("Submit");
-      console.log("B",event.currentTarget.value);
+      console.log("Before",event.currentTarget.value);
       event.currentTarget.value = "";
       // event.preventDefault();
-      console.log("A",event.currentTarget.value);
+      console.log("After",event.currentTarget.value);
     }
-  }
-  reverseTodo(){
-    if (this.state.reverseCounter === "Newest") {
-      this.setState({reverseCounter: "Oldest"});
+  };
+  const reverseTodo=()=>{
+    if ( reverseList === "Newest") {
+      setReverseList("Oldest");
     }else {
-      this.setState({reverseCounter: "Newest"});
+      setReverseList("Newest");
     }
-  }
-
-  componentDidMount() {
-
-  }
-
-  //ส่วน input รับค่า addtodo ส่งไป Mutations
-  render() {
+  };
     return (
       <div className="card card-body my-3">
-        <Mutation
-          mutation={ADD_TODO}
-          refetchQueries={() => [{ query: TODOLIST_QUERY, variables: { sort: "Newest" } },{ query: TODOLIST_QUERY, variables: { sort: "Oldest" } }]}
-          // update={(cache, {data: {addTodo}}) => {
-          //   let reverseTodo;
-          //   const {getTodoList} = cache.readQuery({query: TODOLIST_QUERY,variables:{  sort: this.state.reverseCounter } });
-          //   if (this.state.reverseCounter !== "Oldest" ){
-          //     reverseTodo = [addTodo].concat(getTodoList);
-          //   }else {
-          //     reverseTodo = getTodoList.concat([addTodo]);
-          //   }
-          //   cache.writeQuery({
-          //     query: TODOLIST_QUERY,
-          //     variables:{  sort: this.state.reverseCounter },
-          //     data: {getTodoList: reverseTodo},
-          //   });
-          // }}
-        >
-          {addTodo => (
             <form
-              onSubmit={e => {
-                e.preventDefault();
-                if(this.state.new_todo !== ""){
-                  addTodo({variables: {title: this.state.new_todo}});
-                  e.currentTarget.value = "";
+              onSubmit={event => {
+                event.preventDefault();
+                if(new_todo !== ""){
+                  addTodo({variables: {title: new_todo}}).then(() => "");
                 }
               }}
             >
@@ -121,31 +88,20 @@ export class TodoInput extends Component {
                 <input
                   type="text"
                   className="form-control m-0 inputtext"
-                  // value={this.state.new_todo}
-                  onChange={this.handleChange}
-                  onKeyDown={this.handleEnterPressed}
-
+                  onChange={handleChange}
+                  onKeyDown={handleEnterPressed}
                 />
-                <div className="input-group-text m-0 bg-primary text-white" onClick={this.reverseTodo } >
+                <div className="input-group-text m-0 bg-primary text-white" onClick={reverseTodo } >
                   <i className="fas fa-retweet"  />
                 </div>
               </div>
             </form>
-          )}
-        </Mutation>
-        {/* เรียกcomponent TodoItem แสดงlistไอเทม */}
-
         <div>
-          <h2>{this.state.reverseCounter}</h2>
-          <Mutation mutation={UPDATE_TITLE} >
-            {editTitle => (
-          <Mutation mutation={UPDATE_STATUS} children={editStatus => <TodoItem reverseCounter={this.state.reverseCounter}  editTitle={editTitle} editStatus={editStatus}/>} />
-              )}
-            </Mutation>
+          <h3>{reverseList}</h3>
+          <TodoItem reverseCounter={reverseList}  editTitle={editTitle} editStatus={editStatus}/>
         </div>
       </div>
     );
-  }
 }
 
 export default TodoInput;

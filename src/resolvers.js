@@ -79,19 +79,31 @@ const resolvers = {
       console.log("JSON file has been saved.");
       return jsonObj.Todo[objIndex];
     },
+    // checkAllStatus: (parent, { completed }) => {
+    //   const file = fs.readFileSync("src/data.json", "utf8");
+    //   let getFullName(item) {
+    //     let fullname = [item.id,item.title,item.completed = completed,item.addtime]
+    //     return fullname;
+    //   }
+    //   // const checkAl = completed
+    //   let jsonObj = JSON.parse(file);
+    //   console.log(jsonObj);
+    //   // jsonObj.Todo.completed = completed;
+    //   let checkAl =  jsonObj.Todo.map(getFullName);
+    //   let jsonContent = JSON.stringify(checkAl);
+    //   console.log(jsonContent);
+    //   fs.writeFileSync("src/data.json", jsonContent);
+    //   console.log("JSON file has been saved.");
+    //   return checkAl.Todo;
+    // },
     removeTodo: (parent, { id }) => {
       const file = fs.readFileSync("src/data.json", "utf8");
       let jsonObj = JSON.parse(file);
       console.log(jsonObj);
       objIndex = jsonObj.Todo.findIndex(obj => obj.id == id);
-      //
       jsonObj.Todo.splice(objIndex, 1);
-
-      // ghjh
       let jsonContent = JSON.stringify(jsonObj);
       console.log(jsonContent);
-
-      //
       fs.writeFileSync("src/data.json", jsonContent);
       console.log("JSON file has been saved.");
       return jsonObj.Todo;
