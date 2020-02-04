@@ -37,15 +37,15 @@ body {
   list-style: none;
   overflow: hidden;
 } */
-.list .list-item {
-  margin: 0;
-  padding: 0;
-  border-bottom: 1px solid #ecf0f1;
-  position: relative;
-}
-.list .list-item:last-child {
-  border: 0;
-}
+/*.list .list-item {*/
+/*  margin: 0;*/
+/*  padding: 0;*/
+/*  border-bottom: 1px solid #ecf0f1;*/
+/*  position: relative;*/
+/*}*/
+/*.list .list-item:last-child {*/
+/*  border: 0;*/
+/*}*/
 .hidden-box {
   position: absolute;
   top: -9999px;
@@ -67,9 +67,9 @@ body {
   flex-direction: row;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
-  -webkit-box-pack: between;
-  -ms-flex-pack: between;
-  justify-content: flex-between;
+  /*-webkit-box-pack: between;*/
+  /*-ms-flex-pack: between;*/
+  /*justify-content: flex-between;*/
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -78,13 +78,13 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-item-align: center;
+  /*-ms-flex-item-align: center;*/
   align-self: center;
   position: relative;
   height: 20px;
   width: 20px;
   margin: 0 20px;
-  border: 2px solid #3498db;
+  border: 2px solid #F96519;
   border-radius: 2px;
   cursor: pointer;
 }
@@ -92,7 +92,7 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-item-align: center;
+  /*-ms-flex-item-align: center;*/
   align-self: center;
   position: relative;
   cursor: pointer;
@@ -102,7 +102,7 @@ body {
 .check--label-text:after {
   content: "";
   display: block;
-  width: 0%;
+  /*width: 0%;*/
   height: 2px;
   background-color: #000;
   position: absolute;
@@ -117,7 +117,7 @@ body {
   background-color: #f9f9f9;
 }
 .hidden-box:checked + .check--label .check--label-box {
-  background-color: #3498db;
+  background-color: #F96519;
 }
 .hidden-box:checked + .check--label .check--label-box:after {
   content: "";
@@ -127,11 +127,17 @@ body {
   left: 4px;
   width: 6px;
   height: 12px;
-  border: solid #000;
+  border: solid #FFFFFF;
   border-width: 0 2px 2px 0;
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 .hidden-box:checked + .check--label .check--label-text:after {
   width: 85%;
+}
+
+
+/*///////*/
+form .bg{
+  background-color: #F96519;
 }

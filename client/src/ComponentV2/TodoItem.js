@@ -1,8 +1,7 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import "./Checkbox.css";
-import Editform from "./Editform.js";
-import {Mutation, Query} from "@apollo/react-components";
-import { useQuery,useMutation } from '@apollo/react-hooks';
+import EditTitle from "./EditTitle.js";
+import { useQuery } from '@apollo/react-hooks';
 import gql from "graphql-tag";
 
 const TODOLIST_QUERY = gql`
@@ -15,41 +14,28 @@ const TODOLIST_QUERY = gql`
         }
     }
 `;
-const REMOVE_TODO = gql`
-    mutation EditStatus($id: ID!) {
-        removeTodo(id: $id) {
-            id
-            title
-            completed
-            
-        }
-    }
-`;
 function TodoItem(props){
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {new_Title: "", count_Display: false };
-  //   this.handleChangeTitle = this.handleChangeTitle.bind(this);
-  //   this.myEdit = React.createRef();
-  // }
+  const [new_Title, setNew_Title] = useState("");
+  const [count_Display, setCount_Display] = useState(false);
 
-  // handleChangeTitle(event) {
-  //   this.setState({new_Title: event.target.value});
-  // }
+  const handleChangeTitle= (event) =>{
+    setNew_Title(event.target.value);
+  };
+  const handleEnterPressed = (event) => {
+    if (event.key === "Enter") {
+      console.log("Submit");
+      event.currentTarget.value = "";
+      setCount_Display(true );
+    }
+  };
 
-  // handleEnterPressed = event => {
-  //   if (event.key === "Enter") {
-  //     console.log("Submit");
-  //     event.currentTarget.value = "";
-  //     this.setState({count_Display: true });
-  //   }
-  // };
-    const {editStatus,editTitle,reverseCounter} = this.props;
-    return (
-      <Query query={TODOLIST_QUERY} variables={ { sort: reverseCounter} }   >
-        {({loading, error, data  }) => {
-          if (loading) return <p>Loading...</p>;
-          if (error) return <p>Error :(</p>;
+    const {editStatus,editTitle,reverseList,removeTodo} = props;
+    const { loading, error, data } = useQuery(TODOLIST_QUERY, {
+      variables: { sort: reverseList },});
+
+      if (loading) return <p>Loading...</p>;
+      if (error) return <p>Error :(</p>;
+
           return  data.getTodoList.map(({id, title, completed}) => {
             const handleUpdateStatus = event => {
               event.preventDefault();
@@ -58,38 +44,29 @@ function TodoItem(props){
             };
             const handleUpdateTitle = event => {
               event.preventDefault();
-              editTitle({variables: {id, title: this.state.new_Title}});
+              editTitle({variables: {id, title: new_Title}});
+            };
+            const handleRemoveTodo = event => {
+              event.preventDefault();
+              removeTodo({variables: {id: id}}).then(() =>  console.log("detele") );
             };
             return (
               <div className="row" key={id}>
                   <input
-                    type="checkbox" className="hidden-box" id={title} checked={completed}
+                    type="checkbox" className="hidden-box" id={id} checked={completed}
                     onChange={handleUpdateStatus}
                   />
-                  <label htmlFor={title} className="check--label">
+                  <label htmlFor={id} className="check--label">
                     <span className="check--label-box"/>
                     <span className="check--label-text">{title}</span>
                         <form
-                          ref={this.myEdit}
-                          onSubmit={handleUpdateTitle}
-                        >
-                          <Editform count_Display={this.state.count_Display} handleChangeTitle={this.handleChangeTitle}  handleEnterPressed={this.handleEnterPressed} />
+                          onSubmit={handleUpdateTitle}>
+                          <EditTitle count_Display={count_Display} handleChangeTitle={handleChangeTitle} handleEnterPressed={handleEnterPressed} />
                         </form>
                     <div className="todo-icon justify-content-end ">
-                      <Mutation
-                        mutation={REMOVE_TODO}
-                        refetchQueries={() => [{ query: TODOLIST_QUERY, variables: { sort: "Newest" } },{ query: TODOLIST_QUERY, variables: { sort: "Oldest" } }]}
-                      >
-                        {removeTodo => (
-                          <form onSubmit={e => {
-                            e.preventDefault();
-                            removeTodo({variables: {id: id}});
-                            console.log("detele");
-                          }}>
-                      <button type="submit" className="mx-2 text-danger"><i className="fas fa-trash" /></button>
+                          <form onSubmit={handleRemoveTodo}>
+                      <button type="submit" className="mx-2 bg-danger text-white border-danger"><i className="fas fa-trash" /></button>
                             </form>
-                        )}
-                      </Mutation>
                     </div>
                   </label>
               </div>
@@ -97,9 +74,6 @@ function TodoItem(props){
             );
           })
             ;
-        }}
-      </Query>
-    );
 }
 
 export default TodoItem;
