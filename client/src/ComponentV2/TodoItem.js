@@ -51,7 +51,7 @@ function TodoItem(props){
               removeTodo({variables: {id: id}}).then(() =>  console.log("detele") );
             };
             return (
-              <div className="row" key={id}>
+              <div className="row " key={id}>
                   <input
                     type="checkbox" className="hidden-box" id={id} checked={completed}
                     onChange={handleUpdateStatus}
@@ -59,16 +59,16 @@ function TodoItem(props){
                   <label htmlFor={id} className="check--label">
                     <span className="check--label-box"/>
                     <span className="check--label-text">{title}</span>
-                        <form
-                          onSubmit={handleUpdateTitle}>
-                          <EditTitle count_Display={count_Display} handleChangeTitle={handleChangeTitle} handleEnterPressed={handleEnterPressed} />
-                        </form>
-                    <div className="todo-icon justify-content-end ">
-                          <form onSubmit={handleRemoveTodo}>
-                      <button type="submit" className="mx-2 bg-danger text-white border-danger"><i className="fas fa-trash" /></button>
-                            </form>
-                    </div>
                   </label>
+                <span className="row p-3 ml-auto  align-content-center" >
+                <form
+                  onSubmit={handleUpdateTitle}>
+                  <EditTitle count_Display={count_Display} handleChangeTitle={handleChangeTitle} handleEnterPressed={handleEnterPressed} />
+                </form>
+                  <form onSubmit={handleRemoveTodo}>
+                    <button type="submit" className="mx-2 bg-danger text-white border-danger"><i className="fas fa-trash" /></button>
+                  </form>
+                  </span>
               </div>
 
             );

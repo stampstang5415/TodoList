@@ -103,7 +103,7 @@ function TodoInput(){
               </div>
             </form>
         <div>
-          <h3>{reverseList}</h3>
+          <h4 className="mt-2">{reverseList}</h4>
           <TodoItem reverseList={reverseList} removeTodo={removeTodo} editTitle={editTitle} editStatus={editStatus}/>
         </div>
       </div>

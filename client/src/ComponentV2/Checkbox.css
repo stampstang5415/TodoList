@@ -114,7 +114,7 @@ body {
   transition: width 100ms ease-in-out;
 }
 .hidden-box:checked + .check--label {
-  background-color: #f9f9f9;
+  /*background-color: #f9f9f9;*/
 }
 .hidden-box:checked + .check--label .check--label-box {
   background-color: #F96519;
