@@ -4,28 +4,30 @@ const express = require("express");
 const fs = require("fs");
 const app = express();
 app.use(cors());
+
 const resolvers = {
   Query: {
-    getTodoList: (parent,{sort}) => {
+    getTodoList: (parent, {sort}) => {
       const file = fs.readFileSync("src/data.json", "utf8");
-        if (sort === "Oldest" ){
-          // console.log(file);
-          let jsonObj = JSON.parse(file);
-          console.log(jsonObj);
-          jsonObj.Todo.sort(function(a,b){
-            return new Date(a.addtime) - new Date(b.addtime);
-          });
-          return jsonObj.Todo;
+      if (sort === "Oldest") {
+        // console.log(file);
+        let jsonObj = JSON.parse(file);
+        console.log(jsonObj);
+        jsonObj.Todo.sort(function (a, b) {
+          return new Date(a.addtime) - new Date(b.addtime);
+        });
+        return jsonObj.Todo;
 
-        }if (sort === "Newest"){
+      }
+      if (sort === "Newest") {
         console.log(file);
         let jsonObj = JSON.parse(file);
         console.log(jsonObj);
-        jsonObj.Todo.sort(function(a,b){
+        jsonObj.Todo.sort(function (a, b) {
           return new Date(b.addtime) - new Date(a.addtime);
         });
         return jsonObj.Todo;
-        }else{
+      } else {
         console.log(file);
         return JSON.parse(file).Todo;
       }
@@ -33,7 +35,7 @@ const resolvers = {
   },
 
   Mutation: {
-    addTodo: (parent, { title }) => {
+    addTodo: (parent, {title}) => {
       const file = fs.readFileSync("src/data.json", "utf8");
       const id = uuidv4();
       const date = new Date();
@@ -41,9 +43,8 @@ const resolvers = {
         id,
         title,
         completed: false,
-        addtime : date
+        addtime: date
       };
-      // console.log(Todo);
       let jsonObj = JSON.parse(file);
       console.log(jsonObj);
       jsonObj.Todo.push(newTodo);
@@ -55,7 +56,7 @@ const resolvers = {
       console.log("JSON file has been saved.");
       return jsonObj.Todo[objIndex];
     },
-    editTitle: (parent, { id, title }) => {
+    editTitle: (parent, {id, title}) => {
       const file = fs.readFileSync("src/data.json", "utf8");
       let jsonObj = JSON.parse(file);
       console.log(jsonObj);
@@ -67,7 +68,7 @@ const resolvers = {
       console.log("JSON file has been saved.");
       return jsonObj.Todo[objIndex];
     },
-    editStatus: (parent, { id, completed }) => {
+    editStatus: (parent, {id, completed}) => {
       const file = fs.readFileSync("src/data.json", "utf8");
       let jsonObj = JSON.parse(file);
       console.log(jsonObj);
@@ -96,7 +97,7 @@ const resolvers = {
     //   console.log("JSON file has been saved.");
     //   return checkAl.Todo;
     // },
-    removeTodo: (parent, { id }) => {
+    removeTodo: (parent, {id}) => {
       const file = fs.readFileSync("src/data.json", "utf8");
       let jsonObj = JSON.parse(file);
       console.log(jsonObj);
@@ -108,7 +109,7 @@ const resolvers = {
       console.log("JSON file has been saved.");
       return jsonObj.Todo;
     },
-    changePosition: (parent, { id, position }) => {
+    changePosition: (parent, {id, position}) => {
       const file = fs.readFileSync("src/data.json", "utf8");
       let jsonObj = JSON.parse(file);
       console.log(jsonObj);

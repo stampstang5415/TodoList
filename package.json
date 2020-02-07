@@ -37,7 +37,10 @@
     "graphql-type-json": "^0.3.1",
     "jquery": "^3.4.1",
     "json-server": "^0.15.1",
+    "led": "^1.0.0",
     "npm-update-all": "^1.0.1",
+    "prop-types": "^15.7.2",
+    "styled-components": "^5.0.1",
     "uuid": "^3.4.0"
   },
   "devDependencies": {
