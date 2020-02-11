@@ -16,6 +16,25 @@ const TODOLIST_QUERY = gql`
     }
 `;
 
+const Row = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+`;
+const UpdateTitle = styled.form`
+  margin-left: auto;
+`;
+const DeleteButton = styled.button`
+    background-color: #dc3545!important;
+    border-radius: 20px;
+    color: #fff!important;
+    margin-top: 7px;
+    margin-left: .5rem!important;
+    margin-right: .5rem!important;
+    border-color: brown;
+`;
+
 function TodoItem(props) {
   const [new_Title, setNew_Title] = useState("");
   const [count_Display, setCount_Display] = useState(false);
@@ -75,24 +94,5 @@ function TodoItem(props) {
   })
     ;
 }
-
-const Row = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-`;
-const UpdateTitle = styled.form`
-  margin-left: auto;
-`;
-const DeleteButton = styled.button`
-    background-color: #dc3545!important;
-    border-radius: 20px;
-    color: #fff!important;
-    margin-top: 7px;
-    margin-left: .5rem!important;
-    margin-right: .5rem!important;
-    border-color: brown;
-`;
 
 export default TodoItem;

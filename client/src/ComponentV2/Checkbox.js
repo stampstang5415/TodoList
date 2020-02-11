@@ -1,20 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-function Checkbox(props) {
-  const {checked, handleUpdateStatus,title,id} = props;
-  return (
-    <div>
-      <Wrapper>
-        <Input id={id} type="checkbox" checked={checked} onChange={handleUpdateStatus}/>
-        <Label textstyle={checked} htmlFor={id}>
-          <p>{title}</p>
-        </Label>
-      </Wrapper>
-    </div>
-  )
-}
-
 const Wrapper = styled.div`
   position: relative;
   background-color: white;
@@ -105,5 +91,19 @@ const Input = styled.input`
 //     margin-top: auto;
 //     margin-bottom: auto;
 // `;
+
+function Checkbox(props) {
+  const {checked, handleUpdateStatus,title,id} = props;
+  return (
+    <div>
+      <Wrapper>
+        <Input id={id} type="checkbox" checked={checked} onChange={handleUpdateStatus}/>
+        <Label textstyle={checked} htmlFor={id}>
+          <p>{title}</p>
+        </Label>
+      </Wrapper>
+    </div>
+  )
+}
 
 export default Checkbox

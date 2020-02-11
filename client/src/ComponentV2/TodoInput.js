@@ -55,6 +55,42 @@ const REMOVE_TODO = gql`
     }
 `;
 
+const Card = styled.div`
+    padding: 1rem!important;
+    margin-bottom: 1rem!important;
+    margin-top: 1rem!important;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 15px;
+    background-color: white; 
+`;
+const Time = styled.h4`
+    margin-top: .5rem!important;
+`;
+const InputGroup = styled.div`
+    display: flex;
+    justify-content: center;
+`;
+const BoxIcon = styled.div`
+    background-color: #F96519;
+    color: #fff!important;
+    align-items: center;
+    padding: .375rem .75rem;
+    margin-bottom: 0;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    text-align: center;
+`;
+const InputText = styled.input`
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+`;
+
 function TodoInput() {
   const [new_todo, setNew_todo] = useState("");
   const [reverseList, setReverseList] = useState("Oldest");
@@ -119,41 +155,5 @@ function TodoInput() {
     </Card>
   );
 }
-
-const Card = styled.div`
-    padding: 1rem!important;
-    margin-bottom: 1rem!important;
-    margin-top: 1rem!important;
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
-    border: 1px solid rgba(0,0,0,.125);
-    border-radius: 15px;
-    background-color: white; 
-`;
-const Time = styled.h4`
-    margin-top: .5rem!important;
-`;
-const InputGroup = styled.div`
-    display: flex;
-    justify-content: center;
-`;
-const BoxIcon = styled.div`
-    background-color: #F96519;
-    color: #fff!important;
-    align-items: center;
-    padding: .375rem .75rem;
-    margin-bottom: 0;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    text-align: center;
-`;
-const InputText = styled.input`
-    width: 100%;
-    height: calc(1.5em + .75rem + 2px);
-    padding: .375rem .75rem;
-    margin-left: 5px;
-    margin-right: 5px;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-`;
 
 export default TodoInput;

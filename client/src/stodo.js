@@ -10,17 +10,6 @@ const client = new ApolloClient({
   uri: "http://localhost:5000/server"
 });
 
-function stodo() {
-  return (
-    <ApolloProvider client={client}>
-      <Page>
-        <Title>Stodo</Title>
-        <TodoInput/>
-      </Page>
-    </ApolloProvider>
-  );
-}
-
 const Page = styled.div`
   padding-right: 15px;
    padding-left: 15px;
@@ -33,5 +22,17 @@ const Title = styled.h1`
   text-align: center!important;
   margin-top: 10px;
 `;
+
+function stodo() {
+  return (
+    <ApolloProvider client={client}>
+      <Page>
+        <Title>Stodo</Title>
+        <TodoInput/>
+      </Page>
+    </ApolloProvider>
+  );
+}
+
 
 export default stodo;
